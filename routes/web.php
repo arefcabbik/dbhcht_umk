@@ -12,6 +12,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VerifikasiController;
 use App\Http\Controllers\Admin\Master\UrusanController;
 use App\Http\Controllers\Admin\Master\BidangUrusanController;
+use App\Http\Controllers\Admin\Master\DanaMasterController;
+use App\Http\Controllers\Admin\Master\DanaPembagianController;
 use App\Http\Controllers\Admin\Master\ProgramController;
 use App\Http\Controllers\Admin\Master\KegiatanController;
 use App\Http\Controllers\Admin\Master\KegiatanIndikatorController;
@@ -52,6 +54,16 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Master Data routes
     Route::prefix('master')->name('master.')->group(function () {
         Route::get('/', [MasterController::class, 'index'])->name('index');
+
+        //dana
+        Route::get('/dana-master', [DanaMasterController::class, 'index'])->name('dana-master');
+        //tambah
+        Route::get('/dana-master/tambah', [DanaMasterController::class, 'create'])->name('dana-master.tambah');
+        //store
+        Route::post('/dana-master', [DanaMasterController::class, 'store'])->name('dana-master.store');
+
+        //pembagian dana
+        Route::get('/dana-pembagian', [DanaPembagianController::class, 'index'])->name('dana-pembagian');
         
         // Kesejahteraan Masyarakat
         Route::get('/kesra', [MasterController::class, 'kesra'])->name('kesra');
@@ -63,6 +75,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::get('/kesehatan', [MasterController::class, 'kesehatan'])->name('kesehatan');
 
     // Urusan routes
+        Route::get('/urusan', [UrusanController::class, 'index'])->name('urusan');
         Route::get('/urusan/data', [UrusanController::class, 'data'])->name('urusan.data');
         Route::get('/urusan/list', [UrusanController::class, 'list'])->name('urusan.list');
         Route::post('/urusan', [UrusanController::class, 'store'])->name('urusan.store');

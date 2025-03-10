@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title') - DBHCHT</title>
-    
+
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-    
+
     <!-- JavaScript -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -21,24 +22,32 @@
     <style>
         :root {
             /* Tema Warna Biru */
-            --primary-color: #1a237e;       /* Biru Gelap */
-            --secondary-color: #283593;     /* Biru Medium */
-            --accent-color: #3949ab;        /* Biru Accent */
-            --light-color: #e8eaf6;         /* Biru Sangat Muda */
-            --hover-color: #3f51b5;         /* Biru Hover */
-            --text-color: #ffffff;          /* Teks Putih */
-            --text-dark: #1a237e;           /* Teks Biru Gelap */
-            --border-color: #c5cae9;        /* Border Biru Muda */
+            --primary-color: #1a237e;
+            /* Biru Gelap */
+            --secondary-color: #283593;
+            /* Biru Medium */
+            --accent-color: #3949ab;
+            /* Biru Accent */
+            --light-color: #e8eaf6;
+            /* Biru Sangat Muda */
+            --hover-color: #3f51b5;
+            /* Biru Hover */
+            --text-color: #ffffff;
+            /* Teks Putih */
+            --text-dark: #1a237e;
+            /* Teks Biru Gelap */
+            --border-color: #c5cae9;
+            /* Border Biru Muda */
         }
 
         /* Modal Styles */
         .modal-backdrop {
             opacity: 0.5 !important;
         }
-        
+
         .modal-content {
             background-color: #ffffff !important;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
 
         /* Form Controls */
@@ -48,14 +57,16 @@
             opacity: 0.8;
         }
 
-        .form-control, .form-select {
+        .form-control,
+        .form-select {
             background-color: #ffffff !important;
             border: 1px solid #ced4da;
         }
 
-        .form-control:focus, .form-select:focus {
+        .form-control:focus,
+        .form-select:focus {
             border-color: #80bdff;
-            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
         }
 
         /* Required Fields */
@@ -88,7 +99,8 @@
             border-radius: 8px;
         }
 
-        .nav-link:hover, .nav-link.active {
+        .nav-link:hover,
+        .nav-link.active {
             background: var(--hover-color);
             color: var(--text-color);
         }
@@ -163,6 +175,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container-fluid">
         <div class="row">
@@ -173,7 +186,7 @@
                         <h4 class="mt-2">DBHCHT</h4>
                         <p class="text-light mb-0">Admin Perekonomian</p>
                     </div>
-                    
+
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
@@ -181,6 +194,7 @@
                                 Dashboard
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a href="{{ route('admin.master.index') }}" class="nav-link {{ request()->routeIs('admin.master.*') ? 'active' : '' }}">
                                 <i class="fas fa-database me-2"></i>
@@ -216,6 +230,13 @@
                                 <ul class="nav flex-column ms-3">
                                     <li class="nav-item">
                                         <a href="{{ route('admin.setting.rkp.index') }}" class="nav-link {{ request()->routeIs('admin.setting.rkp.*') ? 'active' : '' }}">
+                                            <i class="fas fa-percent me-2"></i>
+                                            Presentanse Pembagian Dana DBHCHT
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.setting.rkp.index') }}" class="nav-link {{ request()->routeIs('admin.setting.rkp.*') ? 'active' : '' }}">
                                             <i class="fas fa-calendar-alt me-2"></i>
                                             Setting RKP
                                         </a>
@@ -247,29 +268,33 @@
 
     @push('scripts')
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Aktifkan dropdown jika salah satu submenu aktif
-        const activeSubmenu = document.querySelector('#settingCollapse .nav-link.active');
-        if (activeSubmenu) {
-            const settingCollapse = new bootstrap.Collapse(document.getElementById('settingCollapse'), {
-                toggle: false
-            });
-            settingCollapse.show();
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            // Aktifkan dropdown jika salah satu submenu aktif
+            const activeSubmenu = document.querySelector('#settingCollapse .nav-link.active');
+            if (activeSubmenu) {
+                const settingCollapse = new bootstrap.Collapse(document.getElementById('settingCollapse'), {
+                    toggle: false
+                });
+                settingCollapse.show();
+            }
 
-        // Animasi icon saat dropdown dibuka/ditutup
-        document.querySelectorAll('.nav-link.dropdown-toggle').forEach(function(element) {
-            element.addEventListener('click', function() {
-                const icon = this.querySelector('.fa-chevron-down');
-                if (this.getAttribute('aria-expanded') === 'true') {
-                    icon.style.transform = 'rotate(180deg)';
-                } else {
-                    icon.style.transform = 'rotate(0deg)';
-                }
+            // Animasi icon saat dropdown dibuka/ditutup
+            document.querySelectorAll('.nav-link.dropdown-toggle').forEach(function(element) {
+                element.addEventListener('click', function() {
+                    const icon = this.querySelector('.fa-chevron-down');
+                    if (this.getAttribute('aria-expanded') === 'true') {
+                        icon.style.transform = 'rotate(180deg)';
+                    } else {
+                        icon.style.transform = 'rotate(0deg)';
+                    }
+                });
             });
         });
-    });
     </script>
     @endpush
+
+    @stack('scripts')
+
 </body>
-</html> 
+
+</html>

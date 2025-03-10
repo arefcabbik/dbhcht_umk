@@ -3,12 +3,29 @@
 namespace App\Http\Controllers\Admin\Master;
 
 use App\Http\Controllers\Controller;
+use App\Models\DanaMaster;
 use Illuminate\Http\Request;
 use App\Models\Urusan;
 use Illuminate\Support\Facades\DB;
 
 class UrusanController extends Controller
 {
+
+    public function index()
+    {
+        $title = 'Urusan';
+
+        //ambil  tahun pada dana master
+        $tahun = DanaMaster::select('tahun')->distinct()->get();
+
+        $tahun_dropdown = [];
+        foreach ($tahun as $t) {
+            $tahun_dropdown[$t->tahun] = $t->tahun;
+        }
+
+        return view('admin.master.rkp.urusan.index', compact('title', 'tahun_dropdown'));
+    }
+
     public function data()
     {
         try {
@@ -106,7 +123,7 @@ class UrusanController extends Controller
         DB::beginTransaction();
         try {
             $urusan = Urusan::findOrFail($id);
-            
+
             // Check if urusan has related data
             if ($urusan->bidangUrusan()->exists()) {
                 throw new \Exception('Tidak dapat menghapus urusan yang memiliki bidang urusan');
@@ -114,7 +131,7 @@ class UrusanController extends Controller
 
             $urusan->delete();
             DB::commit();
-            
+
             return response()->json([
                 'message' => 'Data berhasil dihapus'
             ]);

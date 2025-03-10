@@ -12,6 +12,34 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-usd fa-3x mb-3 text-primary"></i>
+                                    <h5 class="card-title">Dana DBHCHT</h5>
+                                    <p class="card-text">Kelola data Dana DBHCHT</p>
+                                    <a href="{{ route('admin.master.dana-master') }}" class="btn btn-primary">
+                                        <i class="fas fa-arrow-right"></i> Kelola Data
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 border">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-table fa-3x mb-3 text-primary"></i>
+                                    <h5 class="card-title">RKP</h5>
+                                    <p class="card-text">Kelola Master RKP</p>
+                                    <a href="{{ route('admin.master.urusan') }}" class="btn btn-primary">
+                                        <i class="fas fa-arrow-right"></i> Kelola Data
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
                         <!-- Kesejahteraan Masyarakat -->
                         <div class="col-md-4 mb-4">
                             <div class="card h-100">
@@ -110,19 +138,24 @@
         vertical-align: middle;
         text-align: center;
     }
+
     .nav-tabs .nav-link {
         color: #495057;
     }
+
     .nav-tabs .nav-link.active {
         color: #007bff;
         font-weight: bold;
     }
+
     .btn-action {
         margin: 0 2px;
     }
+
     .table-responsive {
         min-height: 400px;
     }
+
     .table td {
         vertical-align: middle;
     }
@@ -144,9 +177,12 @@
         });
 
         // Handle tab changes
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
             // Adjust DataTables columns when showing tab
-            $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+            $.fn.dataTable.tables({
+                visible: true,
+                api: true
+            }).columns.adjust();
         });
     });
 
